@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* resources/css/app.css */
+
+@import '~admin-lte/dist/css/adminlte.min.css'; /* Asegúrate de que esta línea esté presente */
+
+/* Aquí van los estilos de Tailwind si los tienes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Aquí puedes añadir otros estilos personalizados */
+/* app.css */
+
+/* resources/css/app.css */
+
+@import '~admin-lte/dist/css/adminlte.min.css'; /* Asegúrate de que esta línea esté presente */
+
+/* Aquí van los estilos de Tailwind si los tienes */
+
+/* Otros estilos personalizados */
+body {
+    margin: 0;
+    background: #000; /* Cambia a tu color de fondo deseado */
+}
