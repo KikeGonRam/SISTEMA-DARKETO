@@ -33,30 +33,30 @@ Este proyecto es una plataforma de gestión de citas para la barbería DARKETO, 
    ```bash
    git clone <URL-del-repositorio>
    cd darketo-barberia
-
+   ```
 2. Instala las dependencias de PHP y Node:
    ```bash
-composer install
-npm install && npm run build
-```
+   composer install
+   npm install && npm run build
+   ```
 
 3. Configura el archivo .env para conectar la base de datos y los servicios de terceros (Google, PayPal, Stripe).
 
 
 4. Genera la clave de la aplicación:
    ```bash
-php artisan key:generate
-```
+   php artisan key:generate
+   ```
 
 5. Migra la base de datos:
    ```bash
-php artisan migrate
-```
+   php artisan migrate
+   ```
 
 6. Inicia el servidor local:
    ```bash
-php artisan serve
-```
+   php artisan serve
+   ```
 
 # Acceso a Usuarios
 
