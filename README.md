@@ -35,10 +35,10 @@ Este proyecto es una plataforma de gestión de citas para la barbería DARKETO, 
    cd darketo-barberia
 
 2. Instala las dependencias de PHP y Node:
-
+```bash
 composer install
 npm install && npm run build
-
+```
 
 3. Configura el archivo .env para conectar la base de datos y los servicios de terceros (Google, PayPal, Stripe).
 
