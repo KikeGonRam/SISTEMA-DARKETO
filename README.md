@@ -35,7 +35,7 @@ Este proyecto es una plataforma de gestión de citas para la barbería DARKETO, 
    cd darketo-barberia
 
 2. Instala las dependencias de PHP y Node:
-```bash
+   ```bash
 composer install
 npm install && npm run build
 ```
@@ -44,22 +44,21 @@ npm install && npm run build
 
 
 4. Genera la clave de la aplicación:
-
+   ```bash
 php artisan key:generate
-
+```
 
 5. Migra la base de datos:
-
+   ```bash
 php artisan migrate
-
+```
 
 6. Inicia el servidor local:
-
+   ```bash
 php artisan serve
+```
 
-
-
-Acceso a Usuarios
+# Acceso a Usuarios
 
 Administrador:
 
@@ -71,8 +70,8 @@ Contraseña: admin123@
 Barbero: Inicia sesión usando solo su correo electrónico registrado.
 
 
-Funcionalidades Clave
-
+# Funcionalidades Clave
+ 
 Gestión de Citas: Vista completa de citas con opciones de aceptación, cancelación, y marcado como pendiente.
 
 Panel de Control de Barbero: Los barberos pueden gestionar citas y precios.
@@ -84,7 +83,7 @@ Administración de Productos: Gestión de productos con integración de pagos.
 Generación de PDF: Recepción de un ticket en PDF después de realizar el pago de productos.
 
 
-Tecnologías
+# Tecnologías
 
 Laravel 10
 
@@ -105,13 +104,13 @@ Dompdf o Laravel Snappy para generación de PDF.
 Telescope y Debugbar para depuración en desarrollo.
 
 
-Documentación Técnica
+# Documentación Técnica
 
 Para un manual de usuario completo y guía de instalación, visita el archivo de documentación en docs.
 
 
 Contribución
-
+```bash
 1. Haz un fork del proyecto.
 
 
@@ -122,7 +121,7 @@ Contribución
 
 
 4. Abre un pull request detallando tus cambios.
-
+```
 
 
 Pruebas Automatizadas
