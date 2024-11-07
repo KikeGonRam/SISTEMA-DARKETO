@@ -65,6 +65,12 @@
         .btn-secondary {
             background-color: grey; /* Color para botón de regresar */
         }
+        .btn-green {
+            background-color: #28a745; /* Color verde */
+        }
+        .btn-green:hover {
+            background-color: #218838; /* Color verde más oscuro cuando el cursor pasa sobre el botón */
+        }
     </style>
 </head>
 <body>
@@ -72,7 +78,7 @@
     <div class="alert alert-danger" role="alert">
         {{ session('error') }}
     </div>
-@endif
+    @endif
 
     <div class="container">
         @if(session('success'))
@@ -97,24 +103,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($barbers as $barber)
+                @if($barbers && $barbers->count() > 0)
+                    @foreach ($barbers as $barber)
+                        <tr>
+                            <td>{{ $barber->id }}</td>
+                            <td>{{ $barber->name }}</td>
+                            <td>{{ $barber->email }}</td>
+                            <td>
+                                <img src="{{ $barber->photo ? asset('storage/' . $barber->photo) : asset('storage/barbers/barbero.avif') }}" alt="{{ $barber->name }}" width="100">
+                            </td>
+                            <td>
+                                <a href="{{ route('barbers.edit', $barber->id) }}" class="btn btn-warning">Editar</a>
+                                <a href="{{ route('barbers.show', $barber->id) }}" class="btn btn-green">Detalles</a>
+                                <form action="{{ route('barbers.destroy', $barber->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este barbero?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr>
-                        <td>{{ $barber->id }}</td>
-                        <td>{{ $barber->name }}</td>
-                        <td>{{ $barber->email }}</td>
-                        <td>
-                            <img src="{{ $barber->photo ? asset('storage/' . $barber->photo) : asset('storage/barbers/barbero.avif') }}" alt="{{ $barber->name }}" width="100">
-                        </td>
-                        <td>
-                            <a href="{{ route('barbers.edit', $barber->id) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('barbers.destroy', $barber->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este barbero?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
+                        <td colspan="5" class="text-center">No hay barberos disponibles.</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
     </div>

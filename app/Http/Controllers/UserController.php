@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -39,20 +40,25 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // Validación de los datos
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'password' => 'nullable|string|min:8',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed', // Confirmación de contraseña
         ]);
 
+        // Si se proporciona una nueva contraseña, la encriptamos
         if ($request->filled('password')) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData['password'] = Hash::make($request->password);
         } else {
+            // Si no se proporciona, no actualizamos el campo de la contraseña
             unset($validatedData['password']);
         }
 
+        // Actualizamos el usuario con los datos validados
         $user->update($validatedData);
 
+        // Redirigimos al listado de usuarios con un mensaje de éxito
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
     }
 

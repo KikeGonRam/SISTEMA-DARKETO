@@ -31,6 +31,16 @@
                 <button type="submit" class="btn btn-primary">Agregar Barbero</button>
                 <a href="{{ route('barbers.index') }}" class="btn btn-secondary">Cancelar</a>
             </div>
+            @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
         </form>
     </div>
 

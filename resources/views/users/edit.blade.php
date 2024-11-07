@@ -27,6 +27,15 @@
                 <label for="password" class="form-label">Contraseña (dejar en blanco para no cambiar)</label>
                 <input type="password" name="password" id="password" class="form-control">
             </div>
+            <!-- Aquí va el formulario para cambiar la contraseña -->
+            <div class="mb-3">
+                <label for="new_password" class="form-label">Nueva Contraseña (opcional)</label>
+                <input type="password" name="new_password" id="new_password" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password_confirmation" class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+            </div>
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary">Actualizar</button>
                 <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>

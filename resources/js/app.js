@@ -20,3 +20,18 @@ import './bootstrap'; // O cualquier otro archivo que necesites
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Panel de administración cargado correctamente.");
 });
+
+
+
+// resources/js/app.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteForms = document.querySelectorAll('.delete-form');
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', (event) => {
+            if (!confirm('¿Estás seguro de que deseas eliminar este horario?')) {
+                event.preventDefault();
+            }
+        });
+    });
+});

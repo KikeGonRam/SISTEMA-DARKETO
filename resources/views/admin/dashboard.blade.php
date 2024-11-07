@@ -33,7 +33,9 @@
             <p>Utiliza las siguientes opciones para gestionar la barbería.</p>
             <div class="actions mb-3">
                 <a href="{{ route('users.index') }}" class="button">Gestionar Usuarios</a>
-                <a href="{{ route('appointments.index') }}" class="button">Gestionar Citas</a>
+<!-- Ejemplo en tu menú de administración -->
+                <a href="{{ route('admin.appointments.index') }}">Gestionar Citas</a>
+
                 <!-- Opción para crear barberos -->
                 <a href="{{ route('barbers.index') }}" class="button">Gestionar Barbero</a>
             </div>

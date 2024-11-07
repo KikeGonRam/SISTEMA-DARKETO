@@ -23,10 +23,9 @@ class Appointment extends Model
         return $this->belongsTo(User::class);
     }
 
-    // App\Models\Appointment.php
-
+    // Relación con Barber (mantén solo este método)
     public function barber()
     {
-        return $this->belongsTo(Barber::class, 'barber_id'); // Asegúrate de que barber_id sea la clave foránea
+        return $this->belongsTo(Barber::class, 'barber_id');
     }
 }

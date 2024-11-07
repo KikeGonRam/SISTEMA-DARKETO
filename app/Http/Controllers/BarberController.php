@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Hash;
 
 
 class BarberController extends Controller
@@ -14,9 +15,10 @@ class BarberController extends Controller
     // Método para mostrar la lista de barberos
     public function index()
     {
-        $barbers = Barber::all(); // Obtiene todos los barberos
-        return view('barbers.index', compact('barbers')); // Asegúrate de tener una vista 'index.blade.php' en la carpeta 'resources/views/barbers'
+        $barbers = Barber::all() ?: collect(); // Si no hay resultados, pasa una colección vacía
+        return view('barbers.index', compact('barbers'));
     }
+
 
     // Método para mostrar el formulario de creación de un nuevo barbero
     public function create()
@@ -28,26 +30,34 @@ class BarberController extends Controller
     // Método para almacenar un nuevo barbero
     public function store(Request $request)
     {
+        // Validar los datos del formulario
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:barbers', // Validación para el correo electrónico
+            'email' => 'required|email|unique:barbers,email',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Crear un nuevo barbero
         $barber = new Barber();
         $barber->name = $request->name;
-        $barber->email = $request->email; // Asignar el correo electrónico
+        $barber->email = $request->email;
 
-        // Manejar la carga de la foto
+        // Verificar si se sube una foto
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('barbers', 'public');
-            $barber->photo = $path;
+            // Guardar la foto subida usando Storage
+            $barber->photo = $request->file('photo')->store('barbers', 'public');
+        } else {
+            // Si no se sube foto, asignar una foto predeterminada
+            $barber->photo = 'barbers/barbero.avif'; // Ruta de la foto predeterminada
         }
 
+        // Guardar el barbero en la base de datos
         $barber->save();
 
-        return redirect()->route('barbers.index')->with('success', 'Barbero agregado exitosamente.');
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('barbers.index')->with('success', 'Barbero agregado exitosamente');
     }
+
 
     // Método para mostrar el formulario de edición de un barbero
     public function edit($id)
@@ -129,16 +139,27 @@ class BarberController extends Controller
 
 
     // Ejemplo en BarberController
-public function showAppointments()
-{
-    // Obtén las citas del barbero autenticado (asumiendo que tienes un middleware de autenticación)
-    $appointments = Appointment::where('barber_id', auth()->id())->get();
+    public function showAppointments()
+    {
+        // Obtén las citas del barbero autenticado (asumiendo que tienes un middleware de autenticación)
+        $appointments = Appointment::where('barber_id', auth()->id())->get();
 
-    // Envía $appointments a la vista
-    return view('barbers.cita', compact('appointments'));
-}
+        // Envía $appointments a la vista
+        return view('barbers.cita', compact('appointments'));
+    }
 
+    public function show($id)
+    {
+        // Aquí obtienes las citas o la información relacionada al barbero
+        $appointments = Appointment::where('barber_id', $id)->get();
 
+        return view('barbers.index', compact('appointments')); // Asegúrate de tener la vista correcta
+    }
 
-    // Otros métodos (edit, update, destroy)...
+    public function showw($id)
+    {
+        $barber = Barber::findOrFail($id); // Encuentra al barbero por su ID
+        return view('barbers.show', compact('barber')); // Pasa el barbero a la vista
+    }
+
 }

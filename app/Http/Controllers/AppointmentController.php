@@ -14,15 +14,23 @@ class AppointmentController extends Controller
     {
         // Obtener todas las citas
         $appointments = Appointment::all();
-        return view('appointments.index', compact('appointments'));
+        return view('admin.index', compact('appointments'));
     }
+
+    public function indexx()
+{
+    $appointments = Appointment::where('user_id', auth()->user()->id)->get();
+    return view('user.appointments.index', compact('appointments'));
+}
 
 
     public function create()
     {
-        // Obtener todos los usuarios para seleccionarlos al registrar una cita
-        $users = User::all(); // Obtén la lista de usuarios
-        $barbers = Barber::all(); // Asegúrate de importar el modelo Barber
+        // Obtener todos los usuarios y barberos para pasarlos a la vista
+        $users = User::all(); // Obtener todos los usuarios
+        $barbers = Barber::all(); // Obtener todos los barberos
+
+        // Pasar las variables a la vista
         return view('appointments.create', compact('users', 'barbers'));
     }
 
@@ -49,9 +57,6 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index')->with('success', 'Cita registrada con éxito.');
     }
 
-
-
-
     public function show(Appointment $appointment)
     {
         return view('appointments.show', compact('appointment'));
@@ -65,7 +70,6 @@ class AppointmentController extends Controller
 
         return view('appointments.edit', compact('appointment', 'users', 'barbers'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -87,7 +91,6 @@ class AppointmentController extends Controller
 
         return redirect()->route('appointments.index')->with('success', 'Cita actualizada correctamente.');
     }
-
 
     public function destroy(Appointment $appointment)
     {
@@ -111,7 +114,6 @@ class AppointmentController extends Controller
         return redirect()->route('barbers.dashboard')->with('success', 'El estado de la cita ha sido actualizado.');
     }
 
-
     public function showAppointments()
     {
         // Obtén las citas del barbero autenticado
@@ -123,10 +125,11 @@ class AppointmentController extends Controller
 
     public function userCreate()
     {
-        // Aquí puedes agregar lógica para obtener barberos u otros datos necesarios
+
+        // Aquí obtienes todos los barberos y no los usuarios, ya que el usuario se asignará automáticamente
         $barbers = Barber::all(); // Obtener todos los barberos
 
-        return view('appointments.user_create', compact('barbers')); // Cargar la vista con los barberos
+        return view('appointments.user_create', compact( 'barbers')); // Pasamos solo los barberos a la vista
     }
 
     public function citas()
@@ -139,35 +142,27 @@ class AppointmentController extends Controller
 
     public function userstore(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+        // Validación
+        $validated = $request->validate([
             'barber_id' => 'required|exists:barbers,id',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
         ]);
     
-        // Combina la fecha y la hora
-        $appointmentTime = $request->date . ' ' . $request->time;
+        try {
+            // Crear la cita
+            Appointment::create([
+                'user_id' => auth()->user()->id,  // El usuario autenticado
+                'barber_id' => $validated['barber_id'],
+                'date' => $validated['date'],
+                'time' => $validated['time'],
+            ]);
     
-        // Crear la cita
-        Appointment::create([
-            'user_id' => $request->user_id, // Aquí es donde se utiliza el user_id
-            'barber_id' => $request->barber_id,
-            'appointment_time' => $appointmentTime,
-            'status' => 'pendiente', // Asegúrate de establecer un estado por defecto
-        ]);
-    
-        return redirect()->route('users.citas')->with('success', 'Cita registrada con éxito.');
+            // Redirigir al usuario común a su panel de citas
+            return redirect()->route('users.citas')->with('success', 'Cita creada con éxito.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Hubo un error al crear la cita.');
+        }
     }
     
-
-    public function user_create()
-    {
-        // Obtener todos los usuarios para seleccionarlos al registrar una cita
-        $users = User::all(); // Asegúrate de que hay usuarios
-
-        $users = User::all(); // Obtén la lista de usuarios
-        $barbers = Barber::all(); // Asegúrate de importar el modelo Barber
-        return view('appointments.user_create', compact('users', 'barbers'));
-    }
 }
