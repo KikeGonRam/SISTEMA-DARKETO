@@ -1,66 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+# Proyecto de Gestión de Citas para Barbería - DARKETO
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este proyecto es una plataforma de gestión de citas para la barbería DARKETO, desarrollada con **Laravel 10**. El sistema permite a clientes agendar citas, explorar servicios, y a los barberos gestionar su agenda y disponibilidad. Además, incluye un sistema de administración para controlar todas las operaciones, productos y citas en la barbería.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Características
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Gestión de Citas**: Los clientes pueden agendar, consultar el estado y cancelar citas.
+- **Roles de Usuarios**:
+  - **Cliente**: Puede agendar citas, ver su historial de citas, y explorar servicios.
+  - **Barbero**: Gestiona sus citas, precios, y descuentos. Solo necesita su correo para iniciar sesión.
+  - **Administrador**: Tiene acceso completo al sistema, incluyendo la gestión de usuarios, citas, productos y barberos.
+- **Panel de Administración**: Control completo de citas, productos y usuarios.
+- **Tiendas de Productos**: Catálogo de productos de la barbería con opción de pago en línea mediante PayPal y Stripe.
+- **Generación de Ticket en PDF**: Envía un recibo en PDF tras el pago de productos.
+- **Animación de Fondo**: Efecto de neón con partículas en el fondo.
+- **Integración de Pagos**: Soporte para pagos con PayPal y Stripe.
+- **Autenticación con Google**: Opcional para clientes.
+  
+## Requerimientos
 
-## Learning Laravel
+- **PHP 8.x**
+- **Composer**
+- **Node.js y npm**
+- **Laravel 10**
+- **MySQL** o cualquier otro sistema de base de datos compatible con Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clona el repositorio:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+   ```bash
+   git clone <URL-del-repositorio>
+   cd darketo-barberia
 
-## Laravel Sponsors
+2. Instala las dependencias de PHP y Node:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+composer install
+npm install && npm run build
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. Configura el archivo .env para conectar la base de datos y los servicios de terceros (Google, PayPal, Stripe).
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Genera la clave de la aplicación:
 
-## Code of Conduct
+php artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+5. Migra la base de datos:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+php artisan migrate
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. Inicia el servidor local:
+
+php artisan serve
+
+
+
+Acceso a Usuarios
+
+Administrador:
+
+Correo: admin@darketo.com
+
+Contraseña: admin123@
+
+
+Barbero: Inicia sesión usando solo su correo electrónico registrado.
+
+
+Funcionalidades Clave
+
+Gestión de Citas: Vista completa de citas con opciones de aceptación, cancelación, y marcado como pendiente.
+
+Panel de Control de Barbero: Los barberos pueden gestionar citas y precios.
+
+Panel de Cliente: Muestra el estado de las citas con etiquetas de colores para identificar su estado (pendiente, aceptada, cancelada).
+
+Administración de Productos: Gestión de productos con integración de pagos.
+
+Generación de PDF: Recepción de un ticket en PDF después de realizar el pago de productos.
+
+
+Tecnologías
+
+Laravel 10
+
+Laravel Fortify y Sanctum para la autenticación.
+
+Livewire y Blade para componentes interactivos.
+
+Tailwind CSS para estilos.
+
+Vite como herramienta de construcción.
+
+Laravel Scheduler y colas para tareas y notificaciones.
+
+PayPal y Stripe para integración de pagos en línea.
+
+Dompdf o Laravel Snappy para generación de PDF.
+
+Telescope y Debugbar para depuración en desarrollo.
+
+
+Documentación Técnica
+
+Para un manual de usuario completo y guía de instalación, visita el archivo de documentación en docs.
+
+
+Contribución
+
+1. Haz un fork del proyecto.
+
+
+2. Crea una rama nueva (git checkout -b feature/nueva-funcionalidad).
+
+
+3. Realiza tus cambios y crea commits descriptivos.
+
+
+4. Abre un pull request detallando tus cambios.
+
+
+
+Pruebas Automatizadas
+
+Usamos herramientas de prueba como Playwright y alternativas a Selenium compatibles con PHP. Para ejecutar las pruebas, sigue la configuración descrita en el archivo tests/README.md.
+
+
+---
+
+Notas
+
+Para el ingreso como administrador, recuerda usar el correo admin@darketo.com y la contraseña admin123@.
+
+
+---
+
+Contacto
+
+Para más información o soporte, por favor contacta al equipo de desarrollo a través de [info@darketo.com].
+
+¿Te gustaría que el README incluya instrucciones sobre cómo configurar Google OAuth, o ya tienes esto implementado?
+
